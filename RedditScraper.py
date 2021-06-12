@@ -42,10 +42,15 @@ def jsonDefEncoder(obj):
 
 def getCurrDate():
     current_date = datetime.datetime.now()
+    date = str(current_date.day)
     month = str(current_date.month)
+    year = str(current_date.year)
+    if len(date) == 1:
+        date = "0" + date
     if len(month) == 1:
         month = "0" + month
-    filename = "orbital/log/log-" + str(current_date.day) + month + str(current_date.year) + ".csv"
+    dir = "orbital/log/"
+    filename = dir + "log-" + date + month + year + ".csv"
     return filename
 
 
@@ -57,9 +62,9 @@ class jsonFile():
     def writeTo(self, stockMention):
         with open(self.name, 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(["Stock", "Mentions"])
+            writer.writerow(["Stock", "Post Mentions", "Comment Mentions"])
             for key, value in stockMention:
-                writer.writerow([key, value])
+                writer.writerow([key, value[0], value[1]])
             file.close()
 
 class SubredditScraper:
@@ -98,7 +103,15 @@ class SubredditScraper:
         sort, subreddit = self.set_sort()
 
         print(f'Collecting information from r/{self.sub}.')
-        mentionedStocks = []
+        postIDs = []
+        stockDetails = {}
+
+        for stock in stockTickers.keys():
+            # index 0 refers to post mentions, index 1 refers to comment mentions
+            stockDetails[stock] = [0, 0]
+
+
+        stockMention = []
         i = 0
         for post in subreddit:
             i = i + 1
@@ -107,50 +120,36 @@ class SubredditScraper:
                 for stock in stockTickers.keys():
                     if (re.search(r'\s+\$?' + stock + r'\$?\s+', post.selftext) or re.search(
                             r'\s+\$?' + stock + r'\$?\s+', post.title)):
-                        stockTickers[stock][post.id] = StockPost(post.id, post.permalink, post.ups, post.downs,
-                                                                 post.num_comments, stock)
-
-        for stock in stockTickers:
-            if (len(stockTickers[stock]) > 0):
-                for post in stockTickers[stock]:
-                    mentionedStocks.append(stockTickers[stock][post])
-
-        json_object = json.dumps(mentionedStocks, default=jsonDefEncoder, indent=4)
-        json_string = json.loads(json_object)
-        postID_list = []
-        for i in range(len(json_string)):
-            postID_list.append(json_string[i]["postID"])
-            print(json_string[i]["postURL"])
-
-        list_set = set(postID_list)
-        # convert the set to the list
-        unique_list = (list(list_set))
-        stockCount = {}
-        stockMention = []
-
-        for stock in stockTickers.keys():
-            stockCount[stock] = 0;
-
-        for i in range(len(unique_list)):
-            submission = reddit.submission(id=unique_list[i])
-            submission.comments.replace_more(limit=None)
-            for comment in submission.comments.list():
-                for stock in stockTickers.keys():
-                    if re.search(stock, comment.body, re.IGNORECASE):
-                        stockCount[stock] += 1
+                        # stockTickers[stock][post.id] = StockPost(post.id, post.permalink, post.ups, post.downs,
+                        #                                          post.num_comments, stock)
+                        postIDs.append(post.id)
+                        stockDetails[stock][0] += 1
                         if stock not in stockMention:
                             stockMention.append(stock)
 
-        FilteredstockCount = dict()
-        for (key, value) in stockCount.items():
-            if value != 0:
-                FilteredstockCount[key] = value
+        for i in postIDs:
+            print(i)
 
-        sortedStockCount = sorted(FilteredstockCount.items(), key=lambda x: x[1], reverse=True)
+        for i in range(len(postIDs)):
+            submission = reddit.submission(id=postIDs[i])
+            submission.comments.replace_more(limit=None)
+            for comment in submission.comments.list():
+                for stock in stockTickers.keys():
+                    if re.search(r'\s+\$?' + stock + r'\$?\s+', comment.body):
+                        stockDetails[stock][1] += 1
+                        if stock not in stockMention:
+                            stockMention.append(stock)
+
+
+        filteredStockCount = dict()
+        for stock in stockMention:
+            filteredStockCount[stock] = stockDetails[stock]
+
+        print(filteredStockCount)
+        sortedStockCount = sorted(filteredStockCount.items(), key=lambda x: x[1][1], reverse=True)
         csv_file = jsonFile(getCurrDate())
         csv_file.writeTo(sortedStockCount)
         print(sortedStockCount)
 
-
 if __name__ == '__main__':
-    SubredditScraper('wallstreetbets', lim=50, sort='hot').get_posts()
+    SubredditScraper('stocks', lim=5, sort='hot').get_posts()
