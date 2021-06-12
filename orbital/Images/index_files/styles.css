@@ -1,0 +1,22 @@
+* {
+    background-color:gray;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    margin:0;
+}
+
+.main-header {
+    background-color: rgba(0,0,0,.6);
+    background-image: url("Images/wsb.jpg");
+    background-blend-mode: multiply;
+    background-size: cover;
+    padding-bottom: 30px;
+}
+
