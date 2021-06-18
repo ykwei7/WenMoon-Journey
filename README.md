@@ -1,8 +1,8 @@
 # Stockscraper
 
-Team Name: Neptune
+Team Name: **Neptune**
 
-Proposed Level of Achievement: Germini
+Proposed Level of Achievement: **Germini**
 
 ## Table of Contents
 1. [Motivation](https://github.com/ykwei7/stockscraper/blob/main/README.md#motivation)
