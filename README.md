@@ -1,6 +1,4 @@
-# Stockscraper :rocket:
-
-Team Name: **Neptune**
+# Neptune :rocket:
 
 Proposed Level of Achievement: **Germini**
 
