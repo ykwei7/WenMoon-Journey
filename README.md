@@ -1,4 +1,4 @@
-# Stockscraper
+# Stockscraper :rocket:
 
 Team Name: **Neptune**
 
