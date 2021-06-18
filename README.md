@@ -4,7 +4,13 @@ Team Name: Neptune
 
 Proposed Level of Achievement: Germini
 
-## Table of Content
+## Table of Contents
+1. [Motivation]()
+2. [Aim]()
+3. [User Stories]()
+4. [Features and Timeline]()
+5. [Tech Stack]()
+6. [Additional Info]()
 
 
 ## Motivation
@@ -46,7 +52,7 @@ Features to be completed by the mid of June:
 3. Python (For backend web scraping)
 4. Google OpenAI (For analysing keywords for sentiment)
 
-## Additional Stuff
+## Additional Info
 1. Rate of increase of upvotes and commenting over time that determines popularity
 2. Length of comments to prevent bot manipulation 
 3. Whether to ignore penny stock mentions  
