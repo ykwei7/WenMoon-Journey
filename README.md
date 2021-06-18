@@ -47,11 +47,16 @@ Features to be completed by the mid of June:
 4. Google OpenAI (For analysing keywords for sentiment)
 
 ## Additional Stuff
-Rate of increase of upvotes and commenting over time that determines popularity 
-Length of comments to prevent bot manipulation 
-Whether to ignore penny stock mentions  
-Analysis of mentions to price movement correlation 
-Machine learning AI to pick up on sentiment heavy keywords  
-Pick up on stock sentiments of key players in the stock market e.g Elon Musk and give higher weightage  
-Scrape data from other websites such as Twitter/4Chan 
-DD tagged post - More weightage based on length 
+1. Rate of increase of upvotes and commenting over time that determines popularity
+2. Length of comments to prevent bot manipulation 
+3. Whether to ignore penny stock mentions  
+4. Analysis of mentions to price movement correlation 
+5. Machine learning AI to pick up on sentiment heavy keywords  
+6. Pick up on stock sentiments of key players in the stock market e.g Elon Musk and give higher weightage  
+7. Scrape data from other websites such as Twitter/4Chan 
+8. DD tagged post - More weightage based on length 
+
+
+
+
+
