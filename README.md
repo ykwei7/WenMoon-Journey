@@ -10,8 +10,9 @@ In this new era of investing, speculation creates demand for stocks and represen
 
 Aim:
 This platform aims to scrape data from Reddit and Twitter to find trending stocks before it rises sharply. 
-User Stories
 
+
+User Stories:
 As an investor, data on potential trending stocks is useful for a better evaluation of the stock.
 
 Features and Timeline: 
