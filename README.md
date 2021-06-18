@@ -5,12 +5,12 @@ Team Name: Neptune
 Proposed Level of Achievement: Germini
 
 ## Table of Contents
-1. [Motivation]()
-2. [Aim]()
-3. [User Stories]()
-4. [Features and Timeline]()
-5. [Tech Stack]()
-6. [Additional Info]()
+1. [Motivation](https://github.com/ykwei7/stockscraper/blob/main/README.md#motivation)
+2. [Aim](https://github.com/ykwei7/stockscraper/blob/main/README.md#aim)
+3. [User Stories](https://github.com/ykwei7/stockscraper/blob/main/README.md#user-stories)
+4. [Features and Timeline](https://github.com/ykwei7/stockscraper/blob/main/README.md#features-and-timeline)
+5. [Tech Stack](https://github.com/ykwei7/stockscraper/blob/main/README.md#tech-stack)
+6. [Additional Info](https://github.com/ykwei7/stockscraper/blob/main/README.md#additional-info)
 
 
 ## Motivation
@@ -43,10 +43,10 @@ Features to be completed by the mid of June:
 1. Displays data from the web scraper in a user-friendly manner for interpretation
 2. Data will be represented in the form of graphs and charts 
  
-## Features to be completed by the mid of July      
+###### Features to be completed by the mid of July      
 1. Use machine learning to improve accuracy of sentiment analysis to interpret human language and emotion
  
-###### Tech Stack
+## Tech Stack
 1. Reddit API
 2. HTML/CSS/Javascript (For frontend)
 3. Python (For backend web scraping)
