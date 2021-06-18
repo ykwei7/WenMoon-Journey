@@ -13,7 +13,9 @@ Proposed Level of Achievement: **Germini**
 
 ## Motivation
 In today’s age of internet finance, investing your money is just a few clicks away. With the recent GME saga, more people than ever have flocked to stock trading platforms, following the trend of bandwagon speculation. GME rose from a measly 8 USD and peaked at more than 400 USD, generating a return of up to fifty times for every dollar put in.
-In this new era of investing, speculation creates demand for stocks and represents an important aspect of investing. Our platform aims to capitalize on this aspect to quantify, explain and predict such speculation.  Often, it is said that people invest based on emotions, and thus our platform scrapes data from social media platforms like Reddit and Twitter to ascertain and gauge trending sentiments. This allows us to identify and suggest stocks that are riding on such "hype waves", allowing us to get in on the action before it rockets.
+In this new era of investing, speculation creates demand for stocks and represents an important aspect of investing. 
+
+Our platform aims to capitalize on this aspect to quantify, explain and predict such speculation.  Often, it is said that people invest based on emotions, and thus our platform scrapes data from social media platforms like Reddit and Twitter to ascertain and gauge trending sentiments. This allows us to identify and suggest stocks that are riding on such "hype waves", allowing us to get in on the action before it rockets.
 
 ## Aim
 This platform aims to scrape data from Reddit and Twitter to find trending stocks before it rises sharply. 
