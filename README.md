@@ -23,13 +23,19 @@ Backend: Web scraper to consolidate the mention count of stocks on reddit and tw
 Features to be completed by the mid of June:
  
 Web scraper code:
+
 a.     API to get data from reddit and twitter website
+
 b.     Algorithm to pick out keywords that are relevant to stocks
+
 c.     Pick out keywords that hold positive or negative sentiments
+
 d.     Data indexing to link mention count and sentiment to stock ticker
  
 Website:
+
 a.   Displays data from the web scraper in a user-friendly manner for interpretation
+
 b.    Data will be represented in the form of graphs and charts 
  
 Features to be completed by the mid of July:         
