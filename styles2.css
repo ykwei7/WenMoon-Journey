@@ -1,0 +1,43 @@
+* {
+    background-image: url("Images/outerspace-cartoon.jpg");
+    color:white;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.nav ul {
+    margin:0px;
+}
+
+.nav li {
+    display:inline;
+}
+
+.nav a {
+    padding: .5em;
+    text-decoration: none;
+}
+
+.main-nav {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight:bolder;
+    border-bottom: 1px solid rgba(255,255,255,.3);
+    color:white;
+}
+
+.main-nav li {
+    padding:0 3%;
+}
+
+.nav a:hover {
+    background:rgba(255,255,255,.3);
+}
+
+.main-nav {
+    color: white;    
+}
+
+.nav h1 {
+    font-size:2em;
+}
+
