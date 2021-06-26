@@ -1,0 +1,74 @@
+def parse_text(text):
+    # Breaks up sentences into individual words
+    nlp = spacy.load("en_core_web_sm")
+    doc = nlp(text)
+
+    token_list = [token for token in doc]
+
+    # Removing stop words
+
+    filtered_tokens = [token for token in doc if not token.is_stop]
+
+    # Normalization via stemming of words into root form
+
+    lemmas = [f"Token: {token}, lemme: {token.lemma_}"
+              for token in filtered_tokens
+              ]
+
+    vectors = [token.vector
+              for token in filtered_tokens
+               ]
+
+    avg_vector = np.mean(vectors, axis=1)
+    return avg_vector
+
+def load_data(data_directory):
+    vector_lst = []
+    label_count = 0
+    # neg, pos labelled as 0,1 respectively
+    for label in ["neg", "pos"]:
+        labeled_dir = f"{data_directory}/{label}"
+        for file in os.listdir(labeled_dir):
+            if file.endswith(".txt"):
+                with open(f"{labeled_dir}/{file}", mode='r') as f:
+                    reader = f.read()
+                    vector_lst.append(parse_text(reader, label_count))
+        label_count += 1
+    random.shuffle(vector_lst)
+    x_train = []
+    y_train = []
+
+    for vector in vector_lst:
+        x_train.append(vector[0])
+        y_train.append(np.int32(vector[1]))
+
+    return np.array(x_train), np.array(y_train)
+
+def make_model(x_train, y_train, epochs):
+    model = tf.keras.models.Sequential()
+    embedding = "https://tfhub.dev/google/nnlm-en-dim50/2"
+    hub_layer = hub.KerasLayer(embedding, input_shape=[],
+                               dtype=tf.string, trainable=True)
+    model.add(hub_layer)
+    model.add(tf.keras.layers.Dense(16, activation='relu'))
+    model.add(tf.keras.layers.Dense(1))
+    model.compile(optimizer='adam',
+                  loss=tf.keras.losses.BinaryCrossentropy(from_logits=True),
+                  metrics=['accuracy'])
+    model.fit(x_train, y_train, epochs=epochs)
+    return model
+
+if __name__ == '__main__':
+    text = """
+    Dave watched as the forest burned up on the hill,
+    only a few miles from his house. The car had
+    been hastily packed and Marta was inside trying to round
+    up the last of the pets. "Where could she be?" he wondered
+    as he continued to wait for Marta to appear with the pets.
+    """
+    text2 = "this stock is good"
+
+    x_train, x_test = load_data("training_data")
+    # model = make_model(x_train,x_test,10)
+    # model.predict(parse_text(text2))
+    print(x_train, x_test)
