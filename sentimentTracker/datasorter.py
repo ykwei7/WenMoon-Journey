@@ -9,8 +9,10 @@ def sort_comment(comment, category, count):
 
     if category == 0:
         dir = "neg"
-    else:
+    elif category == 1:
         dir = "pos"
+    else:
+        return
     dir = "C://Users//ykwei//PycharmProjects//stockscraper//sentimentTracker//training_data//" + dir
     name = os.path.join(dir, str(count) + ".txt")
     file1 = open(name, "w")
