@@ -10,7 +10,7 @@ This project aims to help stock investors have a better evaluation of stocks to 
 3. [User Stories](https://github.com/ykwei7/stockscraper/blob/main/README.md#user-stories)
 4. [Features and Timeline](https://github.com/ykwei7/stockscraper/blob/main/README.md#features-and-timeline)
 5. [Tech Stack](https://github.com/ykwei7/stockscraper/blob/main/README.md#tech-stack)
-6. [Additional Info](https://github.com/ykwei7/stockscraper/blob/main/README.md#additional-info)
+6. [Project Log](https://github.com/ykwei7/stockscraper/blob/main/README.md#project-log)
 
 
 ## Motivation
@@ -54,21 +54,57 @@ for post in subreddit:
 This information is parsed into a dictionary and exported as a CSV file for the frontend to process.
  
 ###### Feature 3: Sentiment Analysis
+Comments from the reddit posts are scraped and labelled with a score from 1 to 10.
+This is done with machine learning where a baseline model is created with Google's Tensorflow module.
 
+```
+# Model is created with these layers
+model = tf.keras.models.Sequential()
+model.add(tf.keras.layers.Flatten())
+model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu)) #relu refers to rectified linear function
+model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
+model.add(tf.keras.layers.Dense(2, activation=tf.nn.softmax)) #2 is number of categories to output to
 
+# Model is compiled with an optimizer and loss function
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+              
+# Training of model with x_train (training data), and y_train (true labels), and 10 cycles
+epochs = 10
+history = model.fit(
+    x_train,
+    y_train,
+    epochs=epochs)
+```
 
+The model learns from training data of texts categorized into positive and negative sentiments.
+It can then be used to predict a new unknown text and returns a tuple of the likelihood of this comment being negative against it being positive.
 
+```
+text = "This stock is good."
+# Vectorizes texts into a vectorized array for faster processing
+def vectorize_text(text):
+    text = tf.expand_dims(text, -1)
+    text = vectorize_layer(text)
+    return np.array(text)
 
+# Model is used to predict the positive score of this text
+print(model.predict(vectorize_text(text)))
+// [[0.24691352 0.7530865 ]]
+```
 
-###### Features to be completed by the mid of July      
-1. Use machine learning to improve accuracy of sentiment analysis to interpret human language and emotion
+In this case, with the current training data, the model was able to predict that the positive sentiment of 0.753,
+which is subsequently scaled to a score out of 10 for easier visualization.
  
 ## Tech Stack
-1. Reddit API
+1. Reddit API (For backend web scraping)
 2. HTML/CSS/Javascript (For frontend)
-3. Python (For backend web scraping)
-4. Tensorflow (For analysing keywords for sentiment)
+3. Ajax jQuery (Link information from backend to frontend)
+4. Python (For backend web scraping)
+5. Tensorflow (For analysing keywords for sentiment)
 
+## Project Log
 <!-- 
 Additional features to look at:
 1. Rate of increase of upvotes and commenting over time that determines popularity
