@@ -128,13 +128,12 @@ Additional features to look at:
 8. DD tagged post - More weightage based on length 
 -->
 
-S/n	Task | Date | Hours | Remarks
+S/n | Task | Date | Hours | Remarks
 | :---: | :---: | :---: | :---: |  
 1 | Idealization | 10/5 | 4 | Came up with idea for initial prototype and ways to implement each section of idea									
 2 | Poster | 13/5 | 4 | Drafted the idea for poster and implemented it with PiktoChart									
 3 | Video | 13/5 | 2 | Wrote script for video and did recording to showcase features of prototype 									
-4 | Adjusting backend scraping | 17/5 | 8 | "Adjusted code to output in the correct json format and debugged the re.search to count for proper terms and adjusted stock namings to prevent mislabelling of stock, debugged to check if count is correct
-"									
+4 | Adjusting backend scraping | 17/5 | 8 | Adjusted code to output in the correct json format and debugged the re.search to count for proper terms and adjusted stock namings to prevent mislabelling of stock, debugged to check if count is correct									
 5 | Learning HTML and CSS | 21/5 | 8 | Read up on HTML, CSS									
 6 | Brief website implementation | 25/5 | 8 | Did brief implementation of the skeleton of website and basic website features 									
 7 | Create HTML Table | 28/5 | 8 | Converted scraped data into a csv file to display as a HTML table via javascript and ajax jquery									
