@@ -34,21 +34,32 @@ Ajax jQuery and javascript is used to link the backend information (Stock mentio
 CSS is used to do stying to provide better navigation and user experience.
 
 ###### Feature 2: Webscraper
-Reddit is utilized to scrape the post and mentions and performs a regex search for specific stock ticker keys.
+Reddit is utilized to scrape the post and mentions and performs a regex search for specific stock tickers.
 For instance, Apple is referred often as AAPL, which our regex searches for.
 
 ```
+# Loops through the posts in the subreddit to search for stock tickers
 for post in subreddit:
     i = i + 1
     print(i)
     if post.link_flair_text != 'Meme':
         for stock in stockTickers.keys():
+            # Refines search function of stock to be more precise
             if (re.search(r'\s+\$?' + stock + r'\$?\s+', post.selftext) or re.search(
                     r'\s+\$?' + stock + r'\$?\s+', post.title)):
                 postIDs.append(post.id)
                 stockDetails[stock][0] += 1
                 if stock not in stockMention:
                     stockMention.append(stock)
+
+filteredStockCount = dict()
+for stock in stockMention:
+    filteredStockCount[stock] = stockDetails[stock]
+         
+# Sorts the stock to be ordered by comment mentions
+sortedStockCount = sorted(filteredStockCount.items(), key=lambda x: x[1][1], reverse=True)
+# Creates the CSV file
+csvFile = make_csv_file(getCurrDate())
 ```
 
 This information is parsed into a dictionary and exported as a CSV file for the frontend to process.
