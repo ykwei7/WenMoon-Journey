@@ -129,8 +129,8 @@ Additional features to look at:
 -->
 
 S/n | Task | Date | Hours | Remarks
-| :---: | :---: | :---: | :---: |  
-1 | Idealization | 10/5 | 4 | Came up with idea for initial prototype and ways to implement each section of idea									
+| :---: | :---: | :---: | :---: | :---: | 
+1 | Idealization | 10/5 | 4 | Came up with idea for initial prototype and ways to implement each section of idea								
 2 | Poster | 13/5 | 4 | Drafted the idea for poster and implemented it with PiktoChart									
 3 | Video | 13/5 | 2 | Wrote script for video and did recording to showcase features of prototype 									
 4 | Adjusting backend scraping | 17/5 | 8 | Adjusted code to output in the correct json format and debugged the re.search to count for proper terms and adjusted stock namings to prevent mislabelling of stock, debugged to check if count is correct									
@@ -139,8 +139,7 @@ S/n | Task | Date | Hours | Remarks
 7 | Create HTML Table | 28/5 | 8 | Converted scraped data into a csv file to display as a HTML table via javascript and ajax jquery									
 8 | Refined search function | 04/06 | 4 | Refined search function to search for specific stock ticker keywords									
 9 | Javascript | 09/06 | 8 | Read up on JS									
-10 | Refined stock selection dataset | 11/06 | 8 | Changed the scope of stocks to find for the top 2000 stocks for faster processing									
-11 | Improved interface of website | 18/06 | 8 | Redesigned website and added new subreddit sentiments									
+10 | Refined stock selection dataset | 11/06 | 8 | Changed the scope of stocks to find for the top 2000 stocks for faster processing						11 | Improved interface of website | 18/06 | 8 | Redesigned website and added new subreddit sentiments									
 12 | Sentiment Analysis | 21/06, 25/06 | 14 | Implemented base model for machine learning									
 13 | ReadMe | - | 4 | Updated ReadMe to include more updates on project									
 14 | Making of video | 25/06 | 2 | Made video for milestone 2									
