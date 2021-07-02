@@ -1,83 +1,76 @@
 body {
-  background-image: url("Images/outerspace-cartoon.jpg");
-  background-size: cover;
-  background-blend-mode: multiply;
-	color:black;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  text-align: center;
+    background-image: url("Images/outerspace-cartoon.jpg");
+    background-size: cover;
+    background-blend-mode: multiply;
+	color:white;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+* {
+	color: white;
 }
 
 .main-logo {
 	background-image:none
 }
 
-header {
-  background-color: #f4511e;
-	border-bottom:1px solid rgba(255,255,255,.3);
-  height: 50px;
-}
 
 header::after {
 	content: '';
 	display: table;
-	clear: both;
+	clear: both; 
 }
 
 nav ul {
-  margin:0px;
-}
+    margin:0px;
+} 
 
 nav li {
-  display:inline-block;
-  margin-top: 8px;
+    display:inline-block;
+	margin-top:20px;
 	color:white;
 }
 
 nav a {
-  color: white;
-  padding: .5em;
-  text-decoration: none;
-}
+    padding: .5em;
+    text-decoration: none;
+}  
 
 .main-nav {
 	margin: 0 auto;
-  font-size: 1.5em;
-  font-weight:bolder;
-  border:1px solid rgba(255,255,255,.3);
-  color:white;
+    font-size: 1.5em;
+    font-weight:bolder;
+   
+    color:white; 
 }
 
 
 nav a:hover {
-  background:rgba(255,255,255,.3);
+    text-decoration: underline;
 }
 
 nav h1 {
-  font-size:2em;
+    font-size:2em;
 }
 
 .employee-table {
-  color:black;
-}
+    color:black;
+} 
 
 .nav-word {
 	float: left;
-	margin: 0px;
-  padding-left: 10px;
-}
+	font-family: Brush Script MT, Brush Script Std, cursive;
+	font-size: 50px;
+	margin-top: 0px;
+} 
 
 nav {
 	float: right;
 }
 
-.container {
-  display: inline-block;
-	text-align: center;
+.container { 
+	text-align:center;
 	padding: 50px;
-  background-color: white;
-  border-radius: 15px;
-  width: 50%;
-  margin-top: 30px;
 }
 
 .button {
