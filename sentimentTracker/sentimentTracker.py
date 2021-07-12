@@ -10,8 +10,8 @@ from tensorflow.keras.layers.experimental.preprocessing import TextVectorization
 def load_data(data_directory):
     dataset = []
     label_count = 0
-    # neg, pos labelled as 0,1 respectively
-    for label in ["neg", "pos"]:
+    # neg, pos, neu labelled as 0,1,2 respectively
+    for label in ["neg", "pos", "neu"]:
         labeled_dir = f"{data_directory}/{label}"
         for file in os.listdir(labeled_dir):
             if file.endswith(".txt"):
@@ -55,7 +55,7 @@ model = tf.keras.models.Sequential()
 model.add(tf.keras.layers.Flatten())
 model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu)) #relu refers to rectified linear function
 model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
-model.add(tf.keras.layers.Dense(2, activation=tf.nn.softmax)) #10 is number of categories to output to
+model.add(tf.keras.layers.Dense(3, activation=tf.nn.softmax)) #2 is number of categories to output to
 
 
 model.compile(optimizer='adam',
