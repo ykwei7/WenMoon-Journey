@@ -3,21 +3,53 @@ import csv
 import re
 import os
 import os.path
+from random import shuffle
 
 def sort_comment(comment, category, count):
     # 0 stands for negative, 1 stands for positive
-
     if category == 0:
         dir = "neg"
     elif category == 1:
         dir = "pos"
+    elif category == 2:
+        dir = "neu"
     else:
         return
     dir = "C://Users//ykwei//PycharmProjects//stockscraper//sentimentTracker//training_data//" + dir
     name = os.path.join(dir, str(count) + ".txt")
-    file1 = open(name, "w")
-    file1.write(comment)
-    file1.close()
+    with open(name, "w") as f:
+        f.write(comment)
+        f.close()
+
+def update_count(count, category):
+    if category == 0:
+        dir = "neg"
+    elif category == 1:
+        dir = "pos"
+    elif category == 2:
+        dir = "neu"
+    else:
+        return
+    dir = "C://Users//ykwei//PycharmProjects//stockscraper//sentimentTracker//training_data//" + dir
+    curr_count = os.path.join(dir, "current_count.txt")
+    with open(curr_count, mode="w") as f:
+        f.write(str(count))
+        f.close()
+
+def get_textfile_count(category):
+    if category == 0:
+        dir = "neg"
+    elif category == 1:
+        dir = "pos"
+    elif category == 2:
+        dir = "neu"
+    else:
+        return
+    dir = "C://Users//ykwei//PycharmProjects//stockscraper//sentimentTracker//training_data//" + dir
+    curr_count = os.path.join(dir, "current_count.txt")
+    with open(curr_count, mode="r") as f:
+        lines = f.readlines()
+        return int(lines[0])
 
 reddit = praw.Reddit(
     client_id="d5ihZsiHFZKsiA",
@@ -86,15 +118,20 @@ class SubredditScraper:
                         stockDetails[stock][0] += 1
 
         print("Obtaining comment mentions from posts...")
-        commentCount = 0
         for i in range(len(postIDs)):
             submission = reddit.submission(id=postIDs[i])
             submission.comments.replace_more(limit=None)
-            for comment in submission.comments.list():
+            comments_list = submission.comments.list()
+            shuffle(comments_list)
+            for comment in comments_list:
                 print(comment.body)
-                print("0 for negative, 1 for positive:")
-                category = input()
-                sort_comment(comment.body,category,commentCount)
-                commentCount+=1
+                print("0 for negative, 1 for positive, 2 for neutral:")
+                category = int(input())
+                commentCount = get_textfile_count(category)
+                if isinstance(commentCount, int):
+                    sort_comment(comment.body, category, commentCount)
+                    commentCount = commentCount + 1
+                    update_count(commentCount, category)
+
 if __name__ == '__main__':
-    SubredditScraper('stocks', lim=10, sort='hot').get_posts()
+    SubredditScraper('investing', lim=20, sort='hot').get_posts()
