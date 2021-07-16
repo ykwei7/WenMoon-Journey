@@ -3,7 +3,9 @@ import csv
 import re
 import json
 import datetime
-import pandas as pd
+from sentimentTracker.sentimentTracker import predict
+from tensorflow import keras
+
 
 reddit = praw.Reddit(
     client_id="d5ihZsiHFZKsiA",
@@ -62,9 +64,9 @@ class jsonFile():
     def writeTo(self, stockMention):
         with open(self.name, 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(["Stock", "Post Mentions", "Comment Mentions"])
+            writer.writerow(["Stock", "Post Mentions", "Comment Mentions", "Sentiment score"])
             for key, value in stockMention:
-                writer.writerow([key, value[0], value[1]])
+                writer.writerow([key, value[0], value[1], value[2]])
             file.close()
 
 class SubredditScraper:
@@ -107,8 +109,11 @@ class SubredditScraper:
         stockDetails = {}
 
         for stock in stockTickers.keys():
-            # index 0 refers to post mentions, index 1 refers to comment mentions
-            stockDetails[stock] = [0, 0]
+            # index 0 refers to post mentions
+            # index 1 refers to comment mentions
+            # index 2 refers to sentiment score
+            # index 3 contains a list of scores of neg, pos, neu
+            stockDetails[stock] = [0, 0, 0, [0,0,0]]
 
 
         stockMention = []
@@ -127,8 +132,12 @@ class SubredditScraper:
                         if stock not in stockMention:
                             stockMention.append(stock)
 
-        for i in postIDs:
-            print(i)
+        path = "sentimentTracker/stock_model"
+        model = keras.models.load_model(path)
+
+        ("Model loaded.")
+        print("Loading comments...")
+        postIDs = list(set(postIDs))
 
         for i in range(len(postIDs)):
             submission = reddit.submission(id=postIDs[i])
@@ -137,19 +146,34 @@ class SubredditScraper:
                 for stock in stockTickers.keys():
                     if re.search(r'\s+\$?' + stock + r'\$?\s+', comment.body):
                         stockDetails[stock][1] += 1
+                        # prediction returns a index where 0,1,2 stands for neg,pos,neu
+                        prediction = predict(model, comment.body)
+                        # print(f"{comment.body} :\n{prediction}")
+                        stockDetails[stock][3][prediction] += 1
                         if stock not in stockMention:
                             stockMention.append(stock)
 
-
         filteredStockCount = dict()
         for stock in stockMention:
+            scores = stockDetails[stock][3]
+            # formula to calc scores can be adjusted
+            # print(f"{scores[0]} , {scores[1]}")
+            neg_score = scores[0]
+            pos_score = scores[1]
+            neu_score = scores[2]
+
+            if (neg_score + pos_score) != 0:
+                sentiment = round((pos_score / (neg_score + pos_score)), 2)
+            else:
+                sentiment = 0
+            stockDetails[stock][2] = sentiment
             filteredStockCount[stock] = stockDetails[stock]
 
-        print(filteredStockCount)
+        #print(filteredStockCount)
         sortedStockCount = sorted(filteredStockCount.items(), key=lambda x: x[1][1], reverse=True)
         csv_file = jsonFile(getCurrDate())
         csv_file.writeTo(sortedStockCount)
         print(sortedStockCount)
 
 if __name__ == '__main__':
-    SubredditScraper('stocks', lim=5, sort='hot').get_posts()
+    SubredditScraper('stocks', lim=20, sort='hot').get_posts()
