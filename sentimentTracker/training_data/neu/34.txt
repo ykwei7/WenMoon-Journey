@@ -1,0 +1,7 @@
+This conversation got me curious so I had a quick look and it does appear that some ETFs can be traded after hours by retail investors using a few brokers (not something I encounter often in my jurisdiction). However, it looks like there are drawbacks like fees and wider spreads. [This article](https://therobusttrader.com/can-you-trade-etfs-in-the-after-hours-market/) discusses the issues nicely.
+
+The underlying message is that after-hours trading has limited benefits. It is unlikely that an incredible trading opportunity presents itself after-hours which would necessitate using the market then. Especially when investing for the longer-term, when day to day (and night to night) movements are mostly noise.
+
+So yes, going back on my original argument a bit, you could trade some ETFs after hours if you wanted stock market access at this time, but check the ability to do this and the terms with your broker. The best proxy for an “After Hours” ETF would be to find ETFs comprised of the most-liquid securities and use those. And if you are feeling speculative, the crypto market is there for some higher risk plays, but it sounds like you are already aware of the risks and your appetite there!
+
+Edit: a final thought. Any ETF or heavily traded after hours securities would in itself be diversified, so you might find that even a large move in an underlying security after hours might not affect the ETF’s pricing all that much!

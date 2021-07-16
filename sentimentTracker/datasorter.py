@@ -5,6 +5,7 @@ import os
 import os.path
 from random import shuffle
 
+curr_dir = "C://Users//ykwei//OneDrive//Desktop//Yk//Orbital//stockscraper//sentimentTracker//training_data//"
 def sort_comment(comment, category, count):
     # 0 stands for negative, 1 stands for positive
     if category == 0:
@@ -15,7 +16,7 @@ def sort_comment(comment, category, count):
         dir = "neu"
     else:
         return
-    dir = "C://Users//ykwei//PycharmProjects//stockscraper//sentimentTracker//training_data//" + dir
+    dir = curr_dir + dir
     name = os.path.join(dir, str(count) + ".txt")
     with open(name, "w") as f:
         f.write(comment)
@@ -30,7 +31,7 @@ def update_count(count, category):
         dir = "neu"
     else:
         return
-    dir = "C://Users//ykwei//PycharmProjects//stockscraper//sentimentTracker//training_data//" + dir
+    dir = curr_dir + dir
     curr_count = os.path.join(dir, "current_count.txt")
     with open(curr_count, mode="w") as f:
         f.write(str(count))
@@ -45,7 +46,7 @@ def get_textfile_count(category):
         dir = "neu"
     else:
         return
-    dir = "C://Users//ykwei//PycharmProjects//stockscraper//sentimentTracker//training_data//" + dir
+    dir = curr_dir + dir
     curr_count = os.path.join(dir, "current_count.txt")
     with open(curr_count, mode="r") as f:
         lines = f.readlines()
@@ -102,7 +103,6 @@ class SubredditScraper:
             # index 0 refers to post mentions, index 1 refers to comment mentions
             stockDetails[stock] = [0, 0]
 
-
         stockMention = []
         i = 0
         print(f"Obtaining post mentions from r/{self.sub}...")
@@ -117,6 +117,8 @@ class SubredditScraper:
                         postIDs.append(post.id)
                         stockDetails[stock][0] += 1
 
+        postIDs = list(set(postIDs))
+        shuffle(postIDs)
         print("Obtaining comment mentions from posts...")
         for i in range(len(postIDs)):
             submission = reddit.submission(id=postIDs[i])
@@ -134,4 +136,4 @@ class SubredditScraper:
                     update_count(commentCount, category)
 
 if __name__ == '__main__':
-    SubredditScraper('investing', lim=20, sort='hot').get_posts()
+    SubredditScraper('investing', lim=10, sort='hot').get_posts()

@@ -4,6 +4,7 @@ import string
 import tensorflow as tf
 import random
 import numpy as np
+from tensorflow import keras
 
 from tensorflow.keras.layers.experimental.preprocessing import TextVectorization
 
@@ -44,37 +45,55 @@ vectorize_layer = TextVectorization(
     output_mode='int',
     output_sequence_length=sequence_length)
 
-# Make a text-only dataset (without labels), then call adapt
-embedding_dim = 16
+def create_model():
+    # Make a text-only dataset (without labels), then call adapt
+    embedding_dim = 16
+    x_train, y_train = load_data("training_data")
+    embedding_dim = 16
 
-x_train, y_train = load_data("training_data")
+    model = tf.keras.models.Sequential()
+    model.add(tf.keras.layers.Flatten())
+    model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu)) #relu refers to rectified linear function
+    model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
+    model.add(tf.keras.layers.Dense(3, activation=tf.nn.softmax)) #2 is number of categories to output to
 
-embedding_dim = 16
+    model.compile(optimizer='adam',
+                  loss='sparse_categorical_crossentropy',
+                  metrics=['accuracy'])
 
-model = tf.keras.models.Sequential()
-model.add(tf.keras.layers.Flatten())
-model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu)) #relu refers to rectified linear function
-model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
-model.add(tf.keras.layers.Dense(3, activation=tf.nn.softmax)) #2 is number of categories to output to
+    return model
 
+def train_model(model, epochs,x_train,y_train):
+    epochs = epochs
+    history = model.fit(
+        x_train,
+        y_train,
+        epochs=epochs)
 
-model.compile(optimizer='adam',
-              loss='sparse_categorical_crossentropy',
-              metrics=['accuracy'])
+# model.save("stock_model")
 
-epochs = 10
-history = model.fit(
-    x_train,
-    y_train,
-    epochs=epochs)
-
-text2 = "This stock is good"
+text2 = "This stock is bearish"
 def vectorize_text(text):
     text = tf.expand_dims(text, -1)
     text = vectorize_layer(text)
     return np.array(text)
 
-print(model.predict(vectorize_text(text2)))
+# predicts which category the text belongs to and returns an index corresponding to this category
+def predict(model, text):
+    scores = model.predict(vectorize_text(text))[0].tolist()
+    # print(scores)
+    max_score = max(scores)
+    return scores.index(max_score)
+
+if __name__ == '__main__':
+    x_train, y_train = load_data("training_data")
+    model = create_model()
+    train_model(model,1000,x_train,y_train)
+    model.save("stock_model")
+    # path = "stock_model"
+    # model = keras.models.load_model(path)
+    print(predict(model, "this stock is average"))
+#print(model.predict(vectorize_text(text2)))
 
 
 

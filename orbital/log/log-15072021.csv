@@ -1,0 +1,11 @@
+Stock,Post Mentions,Comment Mentions,Sentiment score
+FB,1,2,-2
+HIMS,1,2,-2
+NVDA,1,2,-2
+AAPL,0,2,-2
+MSFT,0,2,-2
+AMD,0,1,-1
+AMZN,0,1,-1
+GOOGL,0,1,-1
+JP,1,0,0
+ATH,1,0,0
