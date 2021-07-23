@@ -82,17 +82,18 @@ def vectorize_text(text):
 def predict(model, text):
     scores = model.predict(vectorize_text(text))[0].tolist()
     # print(scores)
+    #print(f"{scores}:\n{text}")
     max_score = max(scores)
     return scores.index(max_score)
 
 if __name__ == '__main__':
-    x_train, y_train = load_data("training_data")
-    model = create_model()
-    train_model(model,1000,x_train,y_train)
-    model.save("stock_model")
-    # path = "stock_model"
-    # model = keras.models.load_model(path)
-    print(predict(model, "this stock is average"))
+    # x_train, y_train = load_data("training_data")
+    # model = create_model()
+    # train_model(model,500,x_train,y_train)
+    # model.save("stock_model")
+    path = "stock_model"
+    model = keras.models.load_model(path)
+    print(predict(model, "i think we should hold on to this stock"))
 #print(model.predict(vectorize_text(text2)))
 
 

@@ -42,7 +42,7 @@ def jsonDefEncoder(obj):
     else:  # some default behavior
         return obj.__dict__
 
-def getCurrDate():
+def getFilename(subreddit):
     current_date = datetime.datetime.now()
     date = str(current_date.day)
     month = str(current_date.month)
@@ -52,11 +52,11 @@ def getCurrDate():
     if len(month) == 1:
         month = "0" + month
     dir = "orbital/log/"
-    filename = dir + "log-" + date + month + year + ".csv"
+    filename = "{dir}{subreddit}_log-{date}{month}{year}.csv".format(dir=dir, subreddit=subreddit,date=date,month=month,year=year)
     return filename
 
 
-class jsonFile():
+class csvFile():
 
     def __init__(self, name):
         self.name = name
@@ -93,7 +93,6 @@ class SubredditScraper:
             return self.sort, reddit.subreddit(self.sub).hot(limit=self.lim)
 
     def get_posts(self):
-
         stockTickers = {}
         with open('tickers.csv', mode='r') as infile:
             reader = csv.reader(infile)
@@ -135,7 +134,7 @@ class SubredditScraper:
         path = "sentimentTracker/stock_model"
         model = keras.models.load_model(path)
 
-        ("Model loaded.")
+        print("Model loaded.")
         print("Loading comments...")
         postIDs = list(set(postIDs))
 
@@ -171,9 +170,9 @@ class SubredditScraper:
 
         #print(filteredStockCount)
         sortedStockCount = sorted(filteredStockCount.items(), key=lambda x: x[1][1], reverse=True)
-        csv_file = jsonFile(getCurrDate())
+        csv_file = csvFile(getFilename(self.sub))
         csv_file.writeTo(sortedStockCount)
         print(sortedStockCount)
 
 if __name__ == '__main__':
-    SubredditScraper('stocks', lim=20, sort='hot').get_posts()
+    SubredditScraper('stocks', lim=100, sort='hot').get_posts()

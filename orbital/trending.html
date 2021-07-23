@@ -1,28 +1,337 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="styles-stocks.css">
+    <head>
+        <title> HOME </title>
+        <meta charset="UTF-8">
+        <meta name="description" content = "Stock Scraping Website">
+        <meta name="keywords" content = "HTML, CSS, Stocks, Scraper">
+        <meta name="author" content = "Wei Yangken, Loh Ching Hern">
+        <meta name="viewport" content = "width=device-width, initial-scale=1">
+		<title>r/stocks</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    </head>
+    
+	<body>
+        
+	<header>
+		<div class="main-nav">
+			
+			<h2 class="nav-word">
+				WenMoon Journey
+			</h2>
+            <nav>
+				<ul
+					<li>
+						<a href="home.html"> HOME </a>
+					</li>
+          <li>
+						<a href="trending.html"> TRENDING </a>
+					</li>
+					
+					<li>
+						<a href="about.html"> ABOUT US </a>
+					</li>
+				</ul>
+			</nav>	
+	</header>
+	
+	<div class="container">
+      <link rel="stylesheet" href="table.css"/>
+     <div class="table-responsive">
+      <h1 align="center">Trending Stocks</h1>
+        <button  id="load_data" class="button btn btn-info" style="vertical-align:middle"><span>r/WallStreetBets </span></button></a>
+        <button  id="load_data2" class="button btn btn-info" style="vertical-align:middle"><span>r/Stocks </span></button></a>
+        <button  id="load_data3" class="button btn btn-info" style="vertical-align:middle"><span>r/Investing </span></button></a>
+      <br/>
+      <div align="center">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+      </div>
+      <br/>
+      <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for tickers.." title="Type in a name">
+      <div id="employee_table" align="center">
+      </div>
+     </div>
+    </div>
 
-    <title>Hello, world!</title>
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-	<button type="button" class="btn btn-primary">Primary</button>
-	<button type="button" class="btn btn-secondary">Secondary</button>
-	<button type="button" class="btn btn-success">Success</button>
-	<button type="button" class="btn btn-danger">Danger</button>
-	<button type="button" class="btn btn-warning">Warning</button>
-	<button type="button" class="btn btn-info">Info</button>
-	<button type="button" class="btn btn-light">Light</button>
-	<button type="button" class="btn btn-dark">Dark</button>
+    
 
-	<button type="button" class="btn btn-link">Link</button>
-  </body>
+   </body>
 </html>
 
+<script>
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+var filename = "log/wallstreetbets_log-" + dd + mm + yyyy + ".csv";
+$(document).ready(function(){
+ $('#load_data').click(function(){
+  $.ajax({
+   url:filename,
+   dataType:"text",
+   success:function(data)
+   {
+    var employee_data = data.split(/\r?\n|\r/);
+    var table_data = '';
+    var len = employee_data.length;
+    for(var count = 0; count<employee_data.length; count++)
+    {
+     var cell_data = employee_data[count].split(",");
+     table_data += '<tr>';
+     for(var cell_count=0; cell_count<cell_data.length; cell_count++)
+     {
+      if(count !== 0)
+      {
+        table_data += '<td>'+cell_data[cell_count]+'</td>';
+      }
+      
+      }
+      table_data += '</tr>';
+    }
+    table_data += '</table>';
+    var table_headers = '<table id="employee_table2" class="table table-bordered table-striped tablesorter">';
+    table_headers += '<tr>';
+    table_headers += '<th onclick="sortTable(0)"> Stock </th>';
+    table_headers += '<th onclick="sortTablebyNum(1)"> Post Mentions </th>';
+    table_headers += '<th onclick="sortTablebyNum(2)"> Comment Mentions </th>';
+    table_headers += '<th onclick="sortTable(3)"> Sentiment score </th>';
+    table_headers += '<tr>'; 
+    var table_final = table_headers + table_data;
+    $('#employee_table').html(table_final);
+   }
+  });
+ });
+});
+</script>
+
+<script>
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  var filename2 = "log/stocks_log-" + dd + mm + yyyy + ".csv";
+  $(document).ready(function(){
+ $('#load_data2').click(function(){
+  $.ajax({
+   url:filename2,
+   dataType:"text",
+   success:function(data)
+   {
+    var employee_data = data.split(/\r?\n|\r/);
+    var table_data = '';
+    var len = employee_data.length;
+    for(var count = 0; count<employee_data.length; count++)
+    {
+     var cell_data = employee_data[count].split(",");
+     table_data += '<tr>';
+     for(var cell_count=0; cell_count<cell_data.length; cell_count++)
+     {
+      if(count !== 0)
+      {
+        table_data += '<td>'+cell_data[cell_count]+'</td>';
+      }
+      
+      }
+      table_data += '</tr>';
+    }
+    table_data += '</table>';
+    var table_headers = '<table id="employee_table2" class="table table-bordered table-striped tablesorter">';
+    table_headers += '<tr>';
+    table_headers += '<th onclick="sortTable(0)"> Stock </th>';
+    table_headers += '<th onclick="sortTablebyNum(1)"> Post Mentions </th>';
+    table_headers += '<th onclick="sortTablebyNum(2)"> Comment Mentions </th>';
+    table_headers += '<th onclick="sortTable(3)"> Sentiment score </th>';
+    table_headers += '<tr>'; 
+    var table_final = table_headers + table_data;
+    $('#employee_table').html(table_final);
+   }
+  });
+ });
+});
+  </script>
+
+<script>
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  var filename3 = "log/investing_log-" + dd + mm + yyyy + ".csv";
+  $(document).ready(function(){
+ $('#load_data3').click(function(){
+  $.ajax({
+   url:filename3,
+   dataType:"text",
+   success:function(data)
+   {
+    var employee_data = data.split(/\r?\n|\r/);
+    var table_data = '';
+    var len = employee_data.length;
+    for(var count = 0; count<employee_data.length; count++)
+    {
+     var cell_data = employee_data[count].split(",");
+     table_data += '<tr>';
+     for(var cell_count=0; cell_count<cell_data.length; cell_count++)
+     {
+      if(count !== 0)
+      {
+        table_data += '<td>'+cell_data[cell_count]+'</td>';
+      }
+      
+      }
+      table_data += '</tr>';
+    }
+    table_data += '</table>';
+    var table_headers = '<table id="employee_table2" class="table table-bordered table-striped tablesorter">';
+    table_headers += '<tr>';
+    table_headers += '<th onclick="sortTable(0)"> Stock </th>';
+    table_headers += '<th onclick="sortTablebyNum(1)"> Post Mentions </th>';
+    table_headers += '<th onclick="sortTablebyNum(2)"> Comment Mentions </th>';
+    table_headers += '<th onclick="sortTable(3)"> Sentiment score </th>';
+    table_headers += '<tr>'; 
+    var table_final = table_headers + table_data;
+    $('#employee_table').html(table_final);
+   }
+  });
+ });
+});
+  </script>
+
+<script>
+  function myFunction() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("employee_table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }
+  </script>
+
+<script>
+  function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("employee_table2");
+    switching = true;
+    //Set the sorting direction to ascending:
+    dir = "asc"; 
+    /*Make a loop that will continue until
+    no switching has been done:*/
+    while (switching) {
+      //start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /*Loop through all table rows (except the
+      first, which contains table headers):*/
+      for (i = 3; i < (rows.length - 3); i++) {
+        //start by saying there should be no switching:
+        shouldSwitch = false;
+        /*Get the two elements you want to compare,
+        one from current row and one from the next:*/
+        
+        var x = $(rows).get()[i].getElementsByTagName("TD")[n]
+        var y = $(rows).get()[i + 1].getElementsByTagName("TD")[n];
+        
+        /*check if the two rows should switch place,
+        based on the direction, asc or desc:*/
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch= true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /*If a switch has been marked, make the switch
+        and mark that a switch has been done:*/
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        //Each time a switch is done, increase this count by 1:
+        switchcount ++;      
+      } else {
+        /*If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again.*/
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+  </script>
+
+<script>
+  function sortTablebyNum(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("employee_table2");
+    switching = true;
+    //Set the sorting direction to ascending:
+    dir = "asc"; 
+    /*Make a loop that will continue until
+    no switching has been done:*/
+    while (switching) {
+      //start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /*Loop through all table rows (except the
+      first, which contains table headers):*/
+      for (i = 3; i < (rows.length - 3); i++) {
+        //start by saying there should be no switching:
+        shouldSwitch = false;
+        /*Get the two elements you want to compare,
+        one from current row and one from the next:*/
+        
+        var x = $(rows).get()[i].getElementsByTagName("TD")[n]
+        var y = $(rows).get()[i + 1].getElementsByTagName("TD")[n];
+        
+        /*check if the two rows should switch place,
+        based on the direction, asc or desc:*/
+        if (dir == "desc") {
+          if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch= true;
+            break;
+          }
+        } else if (dir == "asc") {
+          if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /*If a switch has been marked, make the switch
+        and mark that a switch has been done:*/
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        //Each time a switch is done, increase this count by 1:
+        switchcount ++;      
+      } else {
+        /*If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again.*/
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+  </script>

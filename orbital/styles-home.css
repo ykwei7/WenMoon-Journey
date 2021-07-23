@@ -2,7 +2,7 @@ body {
     background-image: url("Images/outerspace-cartoon.jpg");
     background-size: cover;
     background-blend-mode: multiply;
-	color:white;
+	  color:white;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -13,7 +13,6 @@ body {
 .main-logo {
 	background-image:none
 }
-
 
 header::after {
 	content: '';
@@ -43,7 +42,6 @@ nav a {
    
     color:white; 
 }
-
 
 nav a:hover {
     text-decoration: underline;

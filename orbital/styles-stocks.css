@@ -1,29 +1,23 @@
 body {
     background-image: url("Images/outerspace-cartoon.jpg");
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-size: cover;
     background-blend-mode: multiply;
-	color:white;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
 }
 
-* {
-    background-image: url("Images/outerspace-cartoon.jpg");
-    color:white;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+.main-nav {
+	margin: 0 auto;
+    font-size: 1.5em;
+    font-weight:bolder;
+    color:white; 
 }
 
-header {
-	border-bottom:1px solid rgba(255,255,255,.3); 
-}
-
-header::after {
-	content: '';
-	display: table;
-	clear: both; 
-}
-
-nav ul {
-    margin:0px;
+.nav-word {
+	float: left;
+	font-family: Brush Script MT, Brush Script Std, cursive;
+	margin-top: 0px;
+    font-size:50px;
 } 
 
 nav li {
@@ -32,54 +26,81 @@ nav li {
 	color:white;
 }
 
-nav a {
-    padding: .5em;
-    text-decoration: none;
-}  
-
-.main-nav {
-	margin: 0 auto;
-    font-size: 1.5em;
-    font-weight:bolder;
-    border:1px solid rgba(255,255,255,.3); 
-    color:white; 
+nav ul {
+    margin:0px;
 }
-
-
-nav a:hover {
-    background:rgba(255,255,255,.3);
-}
-
-nav h1 {
-    font-size:2em;
-}
-
-.employee-table {
-    color:black;
-} 
-
-.nav-word {
-	float: left;
-	font-family: Brush Script MT, Brush Script Std, cursive;
-	margin-top: 0px;
-} 
 
 nav {
 	float: right;
 }
 
-.container { 
-	text-align:center;
-	padding: 50px;
+nav a {
+    padding: .5em;
+    text-decoration: none;
+} 
+
+nav a:hover {
+    text-decoration: underline;
 }
 
+nav a:visited {
+    color:white; 
+}
 
+.button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 18px;
+    padding: 20px;
+    width: 200px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  .button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  .button:hover span {
+    padding-right: 25px;
+  }
+  
+  .button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
 
+.container { 
+	text-align:center;
+	padding:7em;
+    padding: top 10px;
+}
 
-
-
-
-
-
-
+#myInput {
+    background-image: url('/css/searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    width: 37%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+  }
 

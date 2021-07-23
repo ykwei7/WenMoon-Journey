@@ -5,6 +5,9 @@ import os
 import os.path
 from random import shuffle
 
+from sentimentTracker import predict
+from tensorflow import keras
+
 curr_dir = "C://Users//ykwei//OneDrive//Desktop//Yk//Orbital//stockscraper//sentimentTracker//training_data//"
 def sort_comment(comment, category, count):
     # 0 stands for negative, 1 stands for positive
