@@ -8,10 +8,9 @@
         <meta name="keywords" content = "HTML, CSS, Stocks, Scraper">
         <meta name="author" content = "Wei Yangken, Loh Ching Hern">
         <meta name="viewport" content = "width=device-width, initial-scale=1">
-		<title>r/stocks</title>
+		<title>Trending Stocks</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    </head>
-    
+    </head> 
 	<body>
         
 	<header>
@@ -45,7 +44,6 @@
         <button  id="load_data3" class="button btn btn-info" style="vertical-align:middle"><span>r/Investing </span></button></a>
       <br/>
       <div align="center">
-
       </div>
       <br/>
       <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for tickers.." title="Type in a name">
@@ -53,9 +51,6 @@
       </div>
      </div>
     </div>
-
-    
-
    </body>
 </html>
 
@@ -93,10 +88,11 @@ $(document).ready(function(){
     var table_headers = '<table id="employee_table2" class="table table-bordered table-striped tablesorter">';
     table_headers += '<tr>';
     table_headers += '<th onclick="sortTable(0)"> Stock </th>';
-    table_headers += '<th onclick="sortTablebyNum(1)"> Post Mentions </th>';
-    table_headers += '<th onclick="sortTablebyNum(2)"> Comment Mentions </th>';
-    table_headers += '<th onclick="sortTable(3)"> Sentiment score </th>';
-    table_headers += '<tr>'; 
+    table_headers += '<th onclick="sortTablebyNum(1)"> Opening Price </th>';
+    table_headers += '<th onclick="sortTablebyNum(2)"> Closing Price </th>';  
+    table_headers += '<th onclick="sortTablebyNum(3)"> Post Mentions </th>';
+    table_headers += '<th onclick="sortTablebyNum(4)"> Comment Mentions </th>';
+    table_headers += '<th onclick="sortTable(5)"> Sentiment score </th>';
     var table_final = table_headers + table_data;
     $('#employee_table').html(table_final);
    }
@@ -137,12 +133,13 @@ $(document).ready(function(){
     }
     table_data += '</table>';
     var table_headers = '<table id="employee_table2" class="table table-bordered table-striped tablesorter">';
-    table_headers += '<tr>';
+      table_headers += '<tr>';
     table_headers += '<th onclick="sortTable(0)"> Stock </th>';
-    table_headers += '<th onclick="sortTablebyNum(1)"> Post Mentions </th>';
-    table_headers += '<th onclick="sortTablebyNum(2)"> Comment Mentions </th>';
-    table_headers += '<th onclick="sortTable(3)"> Sentiment score </th>';
-    table_headers += '<tr>'; 
+    table_headers += '<th onclick="sortTablebyNum(1)"> Opening Price </th>';
+    table_headers += '<th onclick="sortTablebyNum(2)"> Closing Price </th>';  
+    table_headers += '<th onclick="sortTablebyNum(3)"> Post Mentions </th>';
+    table_headers += '<th onclick="sortTablebyNum(4)"> Comment Mentions </th>';
+    table_headers += '<th onclick="sortTable(5)"> Sentiment score </th>';
     var table_final = table_headers + table_data;
     $('#employee_table').html(table_final);
    }
@@ -185,10 +182,11 @@ $(document).ready(function(){
     var table_headers = '<table id="employee_table2" class="table table-bordered table-striped tablesorter">';
     table_headers += '<tr>';
     table_headers += '<th onclick="sortTable(0)"> Stock </th>';
-    table_headers += '<th onclick="sortTablebyNum(1)"> Post Mentions </th>';
-    table_headers += '<th onclick="sortTablebyNum(2)"> Comment Mentions </th>';
-    table_headers += '<th onclick="sortTable(3)"> Sentiment score </th>';
-    table_headers += '<tr>'; 
+    table_headers += '<th onclick="sortTablebyNum(1)"> Opening Price </th>';
+    table_headers += '<th onclick="sortTablebyNum(2)"> Closing Price </th>';  
+    table_headers += '<th onclick="sortTablebyNum(3)"> Post Mentions </th>';
+    table_headers += '<th onclick="sortTablebyNum(4)"> Comment Mentions </th>';
+    table_headers += '<th onclick="sortTable(5)"> Sentiment score </th>';
     var table_final = table_headers + table_data;
     $('#employee_table').html(table_final);
    }
@@ -233,7 +231,7 @@ $(document).ready(function(){
       rows = table.rows;
       /*Loop through all table rows (except the
       first, which contains table headers):*/
-      for (i = 3; i < (rows.length - 3); i++) {
+      for (i = 2; i < (rows.length - 3); i++) {
         //start by saying there should be no switching:
         shouldSwitch = false;
         /*Get the two elements you want to compare,
@@ -292,7 +290,7 @@ $(document).ready(function(){
       rows = table.rows;
       /*Loop through all table rows (except the
       first, which contains table headers):*/
-      for (i = 3; i < (rows.length - 3); i++) {
+      for (i = 2; i < (rows.length - 3); i++) {
         //start by saying there should be no switching:
         shouldSwitch = false;
         /*Get the two elements you want to compare,

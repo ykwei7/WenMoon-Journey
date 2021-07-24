@@ -86,6 +86,32 @@ def predict(model, text):
     max_score = max(scores)
     return scores.index(max_score)
 
+# tests current model against a list of texts with known labels
+def test(model, test_dir):
+    test_data = []
+    label_cat = 0
+    for label in ["neg", "pos", "neu"]:
+        labeled_dir = f"{test_dir}/{label}"
+        for file in os.listdir(labeled_dir):
+            if file.endswith(".txt"):
+                with open(f"{labeled_dir}/{file}", mode='r') as f:
+                    reader = f.read()
+                    test_data.append([reader, label_cat])
+        label_cat += 1
+    total = 0
+    correct = 0
+
+    for data in test_data:
+        actual_cat = data[1]
+        predicted_cat = predict(model, data[0])
+        if(actual_cat == predicted_cat):
+            correct += 1
+        total += 1
+
+    accuracy = correct/total
+    rounded_acc = "{:.2f}".format(accuracy)
+    return rounded_acc
+
 if __name__ == '__main__':
     # x_train, y_train = load_data("training_data")
     # model = create_model()
@@ -93,8 +119,7 @@ if __name__ == '__main__':
     # model.save("stock_model")
     path = "stock_model"
     model = keras.models.load_model(path)
-    print(predict(model, "i think we should hold on to this stock"))
-#print(model.predict(vectorize_text(text2)))
+    # print(predict(model, "i think we should hold on to this stock"))
 
 
 

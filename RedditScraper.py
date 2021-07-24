@@ -5,6 +5,7 @@ import json
 import datetime
 from sentimentTracker.sentimentTracker import predict
 from tensorflow import keras
+from PriceScraper import stock_price
 
 
 reddit = praw.Reddit(
@@ -61,12 +62,14 @@ class csvFile():
     def __init__(self, name):
         self.name = name
 
-    def writeTo(self, stockMention):
+    def writeTo(self, sortedStocks, stockMentions):
         with open(self.name, 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(["Stock", "Post Mentions", "Comment Mentions", "Sentiment score"])
-            for key, value in stockMention:
-                writer.writerow([key, value[0], value[1], value[2]])
+            writer.writerow(["Stock","Opening Price", "Closing Price","Post Mentions", "Comment Mentions", "Sentiment score"])
+            for stock in sortedStocks:
+                value = stockMentions[stock]
+                writer.writerow([stock, value["prices"][0], value["prices"][1], value["post_mentions"],
+                    value["comment_mentions"], value["sentiment_score"]])
             file.close()
 
 class SubredditScraper:
@@ -112,7 +115,14 @@ class SubredditScraper:
             # index 1 refers to comment mentions
             # index 2 refers to sentiment score
             # index 3 contains a list of scores of neg, pos, neu
-            stockDetails[stock] = [0, 0, 0, [0,0,0]]
+            # index 4 contains a a list of opening , closing prices
+            # [0, 0, 0, [0,0,0], stock_price(stock)]
+            stockDetails[stock] = {}
+            stockDetails[stock]["post_mentions"] = 0
+            stockDetails[stock]["comment_mentions"] = 0
+            stockDetails[stock]["sentiment_score"] = 0
+            stockDetails[stock]["scores"] = [0,0,0]
+            stockDetails[stock]["prices"] = 0
 
 
         stockMention = []
@@ -127,7 +137,7 @@ class SubredditScraper:
                         # stockTickers[stock][post.id] = StockPost(post.id, post.permalink, post.ups, post.downs,
                         #                                          post.num_comments, stock)
                         postIDs.append(post.id)
-                        stockDetails[stock][0] += 1
+                        stockDetails[stock]["post_mentions"] += 1
                         if stock not in stockMention:
                             stockMention.append(stock)
 
@@ -135,8 +145,10 @@ class SubredditScraper:
         model = keras.models.load_model(path)
 
         print("Model loaded.")
-        print("Loading comments...")
+        print("Scraping comments from PostIDs:")
         postIDs = list(set(postIDs))
+        for i in postIDs:
+            print(i)
 
         for i in range(len(postIDs)):
             submission = reddit.submission(id=postIDs[i])
@@ -144,17 +156,18 @@ class SubredditScraper:
             for comment in submission.comments.list():
                 for stock in stockTickers.keys():
                     if re.search(r'\s+\$?' + stock + r'\$?\s+', comment.body):
-                        stockDetails[stock][1] += 1
+                        stockDetails[stock]["comment_mentions"] += 1
                         # prediction returns a index where 0,1,2 stands for neg,pos,neu
                         prediction = predict(model, comment.body)
                         # print(f"{comment.body} :\n{prediction}")
-                        stockDetails[stock][3][prediction] += 1
+                        stockDetails[stock]["scores"][prediction] += 1
                         if stock not in stockMention:
                             stockMention.append(stock)
 
         filteredStockCount = dict()
+        print("Obtaining sentiment score and scraping prices...")
         for stock in stockMention:
-            scores = stockDetails[stock][3]
+            scores = stockDetails[stock]["scores"]
             # formula to calc scores can be adjusted
             # print(f"{scores[0]} , {scores[1]}")
             neg_score = scores[0]
@@ -165,14 +178,15 @@ class SubredditScraper:
                 sentiment = round((pos_score / (neg_score + pos_score)), 2)
             else:
                 sentiment = 0
-            stockDetails[stock][2] = sentiment
+            stockDetails[stock]["sentiment_score"] = sentiment
             filteredStockCount[stock] = stockDetails[stock]
+            filteredStockCount[stock]["prices"] = stock_price(stock)
 
-        #print(filteredStockCount)
-        sortedStockCount = sorted(filteredStockCount.items(), key=lambda x: x[1][1], reverse=True)
-        csv_file = csvFile(getFilename(self.sub))
-        csv_file.writeTo(sortedStockCount)
+        print(filteredStockCount)
+        sortedStockCount = sorted(filteredStockCount)
         print(sortedStockCount)
+        csv_file = csvFile(getFilename(self.sub))
+        csv_file.writeTo(sortedStockCount, filteredStockCount)
 
 if __name__ == '__main__':
-    SubredditScraper('stocks', lim=100, sort='hot').get_posts()
+    SubredditScraper('wallstreetbets', lim=10, sort='hot').get_posts()
