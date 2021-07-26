@@ -109,7 +109,7 @@ x_train, y_train = load_data("training_data")
 model = create_model()
 train_model(model,1000,x_train,y_train)
 print(predict(model, "This stock is good"))
-// [0.1155489981174469, 0.5207763314247131, 0.36367467045783997]
+// [0.36367467045783997, 0.5207763314247131, 0.1155489981174469]
 // 1
 ```
 
