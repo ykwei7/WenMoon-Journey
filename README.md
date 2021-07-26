@@ -212,7 +212,13 @@ S/n | Task | Date | Hours | Remarks
 10 | Refined stock selection dataset | 11/06 | 8 | Changed the scope of stocks to find for the top 2000 stocks for faster processing						11 | Improved interface of website | 18/06 | 8 | Redesigned website and added new subreddit sentiments									
 12 | Sentiment Analysis | 21/06, 25/06 | 14 | Implemented base model for machine learning									
 13 | ReadMe | - | 4 | Updated ReadMe to include more updates on project									
-14 | Making of video | 25/06 | 2 | Made video for milestone 2									
+14 | Making of video | 25/06 | 2 | Made video for milestone 2
+15 | Improved interface of website | 08/07 | 8 | Redesigned website and improved aesthetics
+16 | Sorting functionality of table | 15/07 | 12 | Combined Ajax Jquery syntax to fit for table header sorting 
+17 | Search functionality | 18/07 | 4 | Allowed for search functionality for specific stock tickers
+18 | Price Scraper | 21/07 | 6 | Used BeautifulSoup to scrape for stock prices
+19 | Collection of training data | 21/07, 22/07	8 | Implemented a datasorter function and manually labeled comments
+20 | Making of video & ReadMe | 26/07	4 | Made video and updated ReadMe for milestone 3 
 	
 Total hours per member: 90											
 
