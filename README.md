@@ -167,15 +167,15 @@ This is done via comparing the number of correctly predicted labels against a se
 For this milestone, we launched our application using HeroKu and updated the following features:
 
 Frontend
-a. Improved user interface of website
-b. Added a searchbar feature to search for specific stock tickers
-c. Added a sorting feature to sort for different categories
-d. Added color indicators for rising and dropping stock prices
+- Improved user interface of website
+- Added a searchbar feature to search for specific stock tickers
+- Added a sorting feature to sort for different categories
+- Added color indicators for rising and dropping stock prices
 
 Backend
-a. Scraped for closing and opening stock prices
-b. Added more training data for sentiment analysis
-c. Added a testing feature for a more accurate model
+- Scraped for closing and opening stock prices
+- Added more training data for sentiment analysis
+- Added a testing feature for a more accurate model
  
 ## Tech Stack
 1. Reddit API (For backend web scraping)
