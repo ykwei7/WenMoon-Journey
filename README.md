@@ -217,9 +217,9 @@ S/n | Task | Date | Hours | Remarks
 16 | Sorting functionality of table | 15/07 | 12 | Combined Ajax Jquery syntax to fit for table header sorting 
 17 | Search functionality | 18/07 | 4 | Allowed for search functionality for specific stock tickers
 18 | Price Scraper | 21/07 | 6 | Used BeautifulSoup to scrape for stock prices
-19 | Collection of training data | 21/07, 22/07	8 | Implemented a datasorter function and manually labeled comments
-20 | Making of video & ReadMe | 26/07	4 | Made video and updated ReadMe for milestone 3 
+19 | Collection of training data | 21/07, 22/07 | 8 | Implemented a datasorter function and manually labeled comments
+20 | Making of video & ReadMe | 26/07 | 4 | Made video and updated ReadMe for milestone 3 
 	
-Total hours per member: 90											
+Total hours per member: 141										
 
 
