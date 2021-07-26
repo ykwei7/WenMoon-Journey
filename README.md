@@ -20,37 +20,34 @@ In this new era of investing, speculation creates demand for stocks and represen
 Our platform aims to capitalize on this aspect to quantify, explain and predict such speculation.  Often, it is said that people invest based on emotions, and thus our platform scrapes data from social media platforms like Reddit and Twitter to ascertain and gauge trending sentiments. This allows us to identify and suggest stocks that are riding on such "hype waves", allowing us to get in on the action before it rockets.
 
 ## Aim
-This platform aims to scrape data from Reddit and Twitter to find trending stocks before it rises sharply. 
-
-## User Stories
-As an investor, data on potential trending stocks is useful for a better evaluation of the stock.
+Our platform aims to provide individuals who plan to purchase stocks a better evaluation of a stock.
+This is done via the scraping of posts and comments on Reddit to obtain the popularity and relative sentiment score of popular upcoming stocks.
+We gauge the popularity by obtaining the number of times a particular stock is mentioned and the sentiment is obtained via a machine learning model.
 
 ## Features and Timeline
 
 ###### Feature 1: Website
-The website serves as an interface to display results of our web scraper. 
-HTML is utilized to create the base skeleton of the website, including a basic ABOUT US page.
-Ajax jQuery and javascript is used to link the backend information (Stock mentions etc) to the frontend.
-CSS is used to do stying to provide better navigation and user experience.
+Our website utilizes a table to display our results in a user-friendly manner.
+Relevant information such as opening and closing prices were added to gauge the trend of the stock.
+A searchbar functionality was added to search for specific stock tickers.
+Sorting functionality was implemented to allow users to view the top stocks for a particular category.
 
 ###### Feature 2: Webscraper
-Reddit is utilized to scrape the post and mentions and performs a regex search for specific stock tickers.
+Reddit API is utilized to scrape the post and mentions and performs a regex search for specific stock tickers.
 For instance, Apple is referred often as AAPL, which our regex searches for.
+In this case, we scrape for the number of posts that mention this stock and binds it to its dictionary value.
 
 ```
 # Loops through the posts in the subreddit to search for stock tickers
 for post in subreddit:
-    i = i + 1
-    print(i)
     if post.link_flair_text != 'Meme':
-        for stock in stockTickers.keys():
-            # Refines search function of stock to be more precise
-            if (re.search(r'\s+\$?' + stock + r'\$?\s+', post.selftext) or re.search(
-                    r'\s+\$?' + stock + r'\$?\s+', post.title)):
-                postIDs.append(post.id)
-                stockDetails[stock][0] += 1
-                if stock not in stockMention:
-                    stockMention.append(stock)
+	for stock in stockTickers.keys():
+	    if (re.search(r'\s+\$?' + stock + r'\$?\s+', post.selftext) or re.search(
+		    r'\s+\$?' + stock + r'\$?\s+', post.title)):
+		postIDs.append(post.id)
+		stockDetails[stock]["post_mentions"] += 1
+		if stock not in stockMention:
+		    stockMention.append(stock)
 
 filteredStockCount = dict()
 for stock in stockMention:
@@ -62,10 +59,22 @@ sortedStockCount = sorted(filteredStockCount.items(), key=lambda x: x[1][1], rev
 csvFile = make_csv_file(getCurrDate())
 ```
 
+A stock price functionality was added to scrape for stock prices with the BeautifulSoup extension on Yahoo Finances.
+
+```
+url = "https://finance.yahoo.com/quote/{stock}/".format(stock=stock)
+
+r = requests.get(url)
+soup = BeautifulSoup(r.text, "html.parser")
+
+closing_price = soup.find('td', {"class": "Ta(end) Fw(600) Lh(14px)", "data-test": "PREV_CLOSE-value"})
+opening_price = soup.find('td', {"class": "Ta(end) Fw(600) Lh(14px)", "data-test": "OPEN-value"})
+```
+
 This information is parsed into a dictionary and exported as a CSV file for the frontend to process.
- 
+
 ###### Feature 3: Sentiment Analysis
-Comments from the reddit posts are scraped and labelled with a score from 1 to 10.
+Comments from the reddit posts are scraped and labelled with a score out of 1.
 This is done with machine learning where a baseline model is created with Google's Tensorflow module.
 
 ```
@@ -74,7 +83,7 @@ model = tf.keras.models.Sequential()
 model.add(tf.keras.layers.Flatten())
 model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu)) #relu refers to rectified linear function
 model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
-model.add(tf.keras.layers.Dense(2, activation=tf.nn.softmax)) #2 is number of categories to output to
+model.add(tf.keras.layers.Dense(3, activation=tf.nn.softmax)) #3 is number of categories to output to
 
 # Model is compiled with an optimizer and loss function
 model.compile(optimizer='adam',
@@ -89,31 +98,52 @@ history = model.fit(
     epochs=epochs)
 ```
 
-The model learns from training data of texts categorized into positive and negative sentiments.
-It can then be used to predict a new unknown text and returns a tuple of the likelihood of this comment being negative against it being positive.
+The model learns from training data of texts categorized into negative, positive and neutral categories.
+
+For instance, in the code snippet below, we use the model to predict the sentiment of this statement.
+Index 0,1 and 2 of the output indicates the likelihood that it belongs to negative, positive or the neutral category.
+In this case, the model predicts a 52.1% chance that it belongs to the positive category and returns an index '1'.
 
 ```
-text = "This stock is good."
-# Vectorizes texts into a vectorized array for faster processing
-def vectorize_text(text):
-    text = tf.expand_dims(text, -1)
-    text = vectorize_layer(text)
-    return np.array(text)
-
-# Model is used to predict the positive score of this text
-print(model.predict(vectorize_text(text)))
-// [[0.24691352 0.7530865 ]]
+x_train, y_train = load_data("training_data")
+model = create_model()
+train_model(model,1000,x_train,y_train)
+print(predict(model, "This stock is good"))
+// [0.1155489981174469, 0.5207763314247131, 0.36367467045783997]
+// 1
 ```
 
-In this case, with the current training data, the model was able to predict that the positive sentiment of 0.753,
-which is subsequently scaled to a score out of 10 for easier visualization.
+This sentiment analysis is applied onto all the comments that mention the stock as seen below
+In other words, if the scraper picked up 10 comments that mentioned the stock and predicted 6 as positive.
+The overall sentiment score of this stock would be 0.60.
+
+```
+for i in range(len(postIDs)):
+    submission = reddit.submission(id=postIDs[i])
+    submission.comments.replace_more(limit=None)
+    for comment in submission.comments.list():
+	for stock in stockTickers.keys():
+	    if re.search(r'\s+\$?' + stock + r'\$?\s+', comment.body):
+		stockDetails[stock]["comment_mentions"] += 1
+		# prediction returns a index where 0,1,2 stands for neg,pos,neu
+		prediction = predict(model, comment.body)
+		# print(f"{comment.body} :\n{prediction}")
+		stockDetails[stock]["scores"][prediction] += 1
+		if stock not in stockMention:
+		    stockMention.append(stock)
+```
+
+We included a testing functionality to gauge how well our model is able to predict comments.
+This is done via comparing the number of correctly predicted labels over the number of total true labels.
+This allows us to gauge how accurate our model is.
  
 ## Tech Stack
 1. Reddit API (For backend web scraping)
 2. HTML/CSS/Javascript (For frontend)
 3. Ajax jQuery (Link information from backend to frontend)
-4. Python (For backend web scraping)
-5. Tensorflow (For analysing keywords for sentiment)
+4. BeautifulSoup (To scrape real-time stock prices)
+5. Python (For backend web scraping)
+6. Tensorflow (For analysing keywords for sentiment)
 
 ## Project Log
 <!-- 
