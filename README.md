@@ -19,7 +19,7 @@ In this new era of investing, speculation creates demand for stocks and represen
 
 Our platform aims to capitalize on this aspect to quantify, explain and predict such speculation.  Often, it is said that people invest based on emotions, and thus our platform scrapes data from social media platforms like Reddit and Twitter to ascertain and gauge trending sentiments. This allows us to identify and suggest stocks that are riding on such "hype waves", allowing us to get in on the action before it rockets.
 
-## Aim
+## Aim and User Stories
 Our platform aims to provide individuals who plan to purchase stocks a better evaluation of a stock.
 This is done via the scraping of posts and comments on Reddit to obtain the popularity and relative sentiment score of popular upcoming stocks.
 We gauge the popularity by obtaining the number of times a particular stock is mentioned and the sentiment is obtained via a machine learning model.
