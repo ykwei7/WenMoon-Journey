@@ -1,0 +1,5 @@
+You realize the lag in semi conductors is years long right? TSM is just living off their past advantage. Intel perused a different path with process technology - and it's quite possible they did that knowing there would be short term pain but long term gain. In which case TSM would be screwed during the coming years. We just don't know right now. We do know that their current advantages are the result of decisions made more than 5 years ago and not anything recent.
+
+What I said is not a fantasy it's just a fact if you research the details about their process technology decisions, things most retail investors have no idea about.
+
+Also I have no idea what you mean by "it was Arm's chip then". They all use arm's design for parts of the chip. Apple has a decade of history making arm chips - with their own designs. The M1 was nothing new in that regard, it's on the same level as making their next ipad chip.

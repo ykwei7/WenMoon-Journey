@@ -14,6 +14,11 @@ def stock_price(stock):
     closing_price = soup.find('td', {"class": "Ta(end) Fw(600) Lh(14px)", "data-test": "PREV_CLOSE-value"})
     opening_price = soup.find('td', {"class": "Ta(end) Fw(600) Lh(14px)", "data-test": "OPEN-value"})
 
+    try:
+        change = soup.find('div', {'class': 'D(ib) Mend(20px)'}).find_all('span')[1].text
+    except AttributeError:
+        change = "NA"
+
     if(closing_price == None):
         closing_price = 0
     else:
@@ -23,7 +28,7 @@ def stock_price(stock):
     else:
         opening_price = remove_commas(opening_price.text)
 
-    return([float(opening_price), float(closing_price)])
+    return([float(opening_price), float(closing_price), change])
 
 def remove_commas(text):
     str = ""
@@ -31,4 +36,3 @@ def remove_commas(text):
         if(x != ','):
             str += x
     return str
-

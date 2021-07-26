@@ -33,3 +33,10 @@ table {
     background: #eeeeee;
   }
    
+  td.pos {
+    color:green;
+  }
+
+  td.neg {
+    color:red;
+  }

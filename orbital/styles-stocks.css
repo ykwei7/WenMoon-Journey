@@ -31,20 +31,21 @@ nav ul {
 }
 
 nav {
+  color:white;
 	float: right;
 }
 
 nav a {
     padding: .5em;
     text-decoration: none;
-} 
+}
+
+a:visited{
+	color: white;
+}
 
 nav a:hover {
     text-decoration: underline;
-}
-
-nav a:visited {
-    color:white; 
 }
 
 .button {

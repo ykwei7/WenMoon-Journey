@@ -139,4 +139,4 @@ class SubredditScraper:
                     update_count(commentCount, category)
 
 if __name__ == '__main__':
-    SubredditScraper('investing', lim=10, sort='hot').get_posts()
+    SubredditScraper('stocks', lim=20, sort='hot').get_posts()

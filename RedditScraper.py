@@ -65,11 +65,11 @@ class csvFile():
     def writeTo(self, sortedStocks, stockMentions):
         with open(self.name, 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(["Stock","Opening Price", "Closing Price","Post Mentions", "Comment Mentions", "Sentiment score"])
+            writer.writerow(["Stock","Previous Close", "Opening Price", "Post Mentions", "Comment Mentions", "Sentiment score","Change"])
             for stock in sortedStocks:
                 value = stockMentions[stock]
-                writer.writerow([stock, value["prices"][0], value["prices"][1], value["post_mentions"],
-                    value["comment_mentions"], value["sentiment_score"]])
+                writer.writerow([stock, value["prices"][1], value["prices"][0], value["post_mentions"],
+                    value["comment_mentions"], value["sentiment_score"], value["prices"][2]])
             file.close()
 
 class SubredditScraper:
@@ -111,12 +111,6 @@ class SubredditScraper:
         stockDetails = {}
 
         for stock in stockTickers.keys():
-            # index 0 refers to post mentions
-            # index 1 refers to comment mentions
-            # index 2 refers to sentiment score
-            # index 3 contains a list of scores of neg, pos, neu
-            # index 4 contains a a list of opening , closing prices
-            # [0, 0, 0, [0,0,0], stock_price(stock)]
             stockDetails[stock] = {}
             stockDetails[stock]["post_mentions"] = 0
             stockDetails[stock]["comment_mentions"] = 0
@@ -189,4 +183,6 @@ class SubredditScraper:
         csv_file.writeTo(sortedStockCount, filteredStockCount)
 
 if __name__ == '__main__':
-    SubredditScraper('wallstreetbets', lim=10, sort='hot').get_posts()
+    SubredditScraper('stocks', lim=100, sort='hot').get_posts()
+    SubredditScraper('investing', lim=100, sort='hot').get_posts()
+    SubredditScraper('wallstreetbets', lim=100, sort='hot').get_posts()

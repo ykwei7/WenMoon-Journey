@@ -52,10 +52,6 @@ nav h1 {
     font-size:2em;
 }
 
-.employee-table {
-    color:black;
-} 
-
 .nav-word {
 	float: left;
 	font-family: Brush Script MT, Brush Script Std, cursive;
@@ -70,8 +66,9 @@ nav h1 {
 
 .footer-nav {
 	position:fixed;
-	left:0;
-	bottom:0;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top: 2em;
 	width:100%;
 	text-align:center;
 }
@@ -81,29 +78,16 @@ nav h1 {
 	font-family:aleo;
 	text-decoration:underline;
 	font-size:50px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .content {
-	margin-left:20em;
-	margin-right:20em;
+	margin-left:auto;
+	margin-right:auto;
 	color:black;
 	background-color:orange;
-	border-radius:25px;
+	border-radius:1em;
 	width:50%;
 }
 
-.table {
-	font-family: arial, sans-serif;
-	border-collapse: collapse;
-	width: 100%;
-  }
-  
-.td, th {
-border: 1px solid #dddddd;
-text-align: left;
-padding: 8px;
-}
-
-.tr:nth-child(even) {
-background-color: #dddddd;
-}

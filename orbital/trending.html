@@ -2,7 +2,7 @@
 <html>
     <link rel="stylesheet" href="styles-stocks.css">
     <head>
-        <title> HOME </title>
+        <title> TRENDING STOCKS </title>
         <meta charset="UTF-8">
         <meta name="description" content = "Stock Scraping Website">
         <meta name="keywords" content = "HTML, CSS, Stocks, Scraper">
@@ -76,23 +76,36 @@ $(document).ready(function(){
      table_data += '<tr>';
      for(var cell_count=0; cell_count<cell_data.length; cell_count++)
      {
-      if(count !== 0)
-      {
-        table_data += '<td>'+cell_data[cell_count]+'</td>';
-      }
-      
-      }
+       if(cell_count === 6){
+          if(count !== 0)
+          {
+            if(cell_data[cell_count][0] === "+") {
+              table_data += '<td style="color:#1ee161">'+cell_data[cell_count]+'</td>';
+            } else if(cell_data[cell_count][0] === "-"){
+              table_data += '<td style="color:red">'+cell_data[cell_count]+'</td>';
+            } else {
+              table_data += '<td>'+cell_data[cell_count]+'</td>';
+            }
+          } 
+       } else {
+        if(count !== 0)
+          {
+            table_data += '<td>'+cell_data[cell_count]+'</td>';
+          } 
+       }
+     }
       table_data += '</tr>';
     }
     table_data += '</table>';
     var table_headers = '<table id="employee_table2" class="table table-bordered table-striped tablesorter">';
     table_headers += '<tr>';
     table_headers += '<th onclick="sortTable(0)"> Stock </th>';
-    table_headers += '<th onclick="sortTablebyNum(1)"> Opening Price </th>';
-    table_headers += '<th onclick="sortTablebyNum(2)"> Closing Price </th>';  
+    table_headers += '<th onclick="sortTablebyNum(1)"> Previous Close </th>';
+    table_headers += '<th onclick="sortTablebyNum(2)"> Opening Price </th>';
     table_headers += '<th onclick="sortTablebyNum(3)"> Post Mentions </th>';
     table_headers += '<th onclick="sortTablebyNum(4)"> Comment Mentions </th>';
     table_headers += '<th onclick="sortTable(5)"> Sentiment score </th>';
+    table_headers += '<th> Price Change </th>';    
     var table_final = table_headers + table_data;
     $('#employee_table').html(table_final);
    }
@@ -123,23 +136,36 @@ $(document).ready(function(){
      table_data += '<tr>';
      for(var cell_count=0; cell_count<cell_data.length; cell_count++)
      {
-      if(count !== 0)
-      {
-        table_data += '<td>'+cell_data[cell_count]+'</td>';
-      }
-      
-      }
+       if(cell_count === 6){
+          if(count !== 0)
+          {
+            if(cell_data[cell_count][0] === "+") {
+              table_data += '<td style="color:#1ee161">'+cell_data[cell_count]+'</td>';
+            } else if(cell_data[cell_count][0] === "-"){
+              table_data += '<td style="color:red">'+cell_data[cell_count]+'</td>';
+            } else {
+              table_data += '<td>'+cell_data[cell_count]+'</td>';
+            }
+          } 
+       } else {
+        if(count !== 0)
+          {
+            table_data += '<td>'+cell_data[cell_count]+'</td>';
+          } 
+       }
+     }
       table_data += '</tr>';
     }
     table_data += '</table>';
     var table_headers = '<table id="employee_table2" class="table table-bordered table-striped tablesorter">';
-      table_headers += '<tr>';
+    table_headers += '<tr>';
     table_headers += '<th onclick="sortTable(0)"> Stock </th>';
-    table_headers += '<th onclick="sortTablebyNum(1)"> Opening Price </th>';
-    table_headers += '<th onclick="sortTablebyNum(2)"> Closing Price </th>';  
+    table_headers += '<th onclick="sortTablebyNum(1)"> Previous Close </th>';
+    table_headers += '<th onclick="sortTablebyNum(2)"> Opening Price </th>';
     table_headers += '<th onclick="sortTablebyNum(3)"> Post Mentions </th>';
     table_headers += '<th onclick="sortTablebyNum(4)"> Comment Mentions </th>';
     table_headers += '<th onclick="sortTable(5)"> Sentiment score </th>';
+    table_headers += '<th> Price Change </th>';    
     var table_final = table_headers + table_data;
     $('#employee_table').html(table_final);
    }
@@ -170,23 +196,36 @@ $(document).ready(function(){
      table_data += '<tr>';
      for(var cell_count=0; cell_count<cell_data.length; cell_count++)
      {
-      if(count !== 0)
-      {
-        table_data += '<td>'+cell_data[cell_count]+'</td>';
-      }
-      
-      }
+       if(cell_count === 6){
+          if(count !== 0)
+          {
+            if(cell_data[cell_count][0] === "+") {
+              table_data += '<td style="color:#1ee161">'+cell_data[cell_count]+'</td>';
+            } else if(cell_data[cell_count][0] === "-"){
+              table_data += '<td style="color:red">'+cell_data[cell_count]+'</td>';
+            } else {
+              table_data += '<td>'+cell_data[cell_count]+'</td>';
+            }
+          } 
+       } else {
+        if(count !== 0)
+          {
+            table_data += '<td>'+cell_data[cell_count]+'</td>';
+          } 
+       }
+     }
       table_data += '</tr>';
     }
     table_data += '</table>';
     var table_headers = '<table id="employee_table2" class="table table-bordered table-striped tablesorter">';
     table_headers += '<tr>';
     table_headers += '<th onclick="sortTable(0)"> Stock </th>';
-    table_headers += '<th onclick="sortTablebyNum(1)"> Opening Price </th>';
-    table_headers += '<th onclick="sortTablebyNum(2)"> Closing Price </th>';  
+    table_headers += '<th onclick="sortTablebyNum(1)"> Previous Close </th>';
+    table_headers += '<th onclick="sortTablebyNum(2)"> Opening Price </th>';
     table_headers += '<th onclick="sortTablebyNum(3)"> Post Mentions </th>';
     table_headers += '<th onclick="sortTablebyNum(4)"> Comment Mentions </th>';
     table_headers += '<th onclick="sortTable(5)"> Sentiment score </th>';
+    table_headers += '<th> Price Change </th>';    
     var table_final = table_headers + table_data;
     $('#employee_table').html(table_final);
    }
