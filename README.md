@@ -9,7 +9,7 @@ This project aims to help stock investors have a better evaluation of stocks to 
 2. [Aim & User Stories](https://github.com/ykwei7/stockscraper/blob/main/README.md#aim)
 3. [Features and Timeline](https://github.com/ykwei7/stockscraper/blob/main/README.md#features-and-timeline)
 4. [Tech Stack](https://github.com/ykwei7/stockscraper/blob/main/README.md#tech-stack)
-5. 
+5. [Milestone Updates](https://github.com/ykwei7/stockscraper/blob/main/README.md#milestone-updates)
 6. [Project Log](https://github.com/ykwei7/stockscraper/blob/main/README.md#project-log) 
 
 
