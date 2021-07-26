@@ -9,7 +9,8 @@ This project aims to help stock investors have a better evaluation of stocks to 
 2. [Aim & User Stories](https://github.com/ykwei7/stockscraper/blob/main/README.md#aim)
 3. [Features and Timeline](https://github.com/ykwei7/stockscraper/blob/main/README.md#features-and-timeline)
 4. [Tech Stack](https://github.com/ykwei7/stockscraper/blob/main/README.md#tech-stack)
-5. [Project Log](https://github.com/ykwei7/stockscraper/blob/main/README.md#project-log) 
+5. 
+6. [Project Log](https://github.com/ykwei7/stockscraper/blob/main/README.md#project-log) 
 
 
 ## Motivation
@@ -112,7 +113,7 @@ print(predict(model, "This stock is good"))
 // 1
 ```
 
-This sentiment analysis is applied onto all the comments that mention the stock as seen below
+This sentiment analysis is then applied onto all the comments that mention the stock as seen below
 In other words, if the scraper picked up 10 comments that mentioned the stock and predicted 6 as positive.
 The overall sentiment score of this stock would be 0.60.
 
@@ -132,9 +133,49 @@ for i in range(len(postIDs)):
 		    stockMention.append(stock)
 ```
 
-We included a testing functionality to gauge how well our model is able to predict comments.
-This is done via comparing the number of correctly predicted labels over the number of total true labels.
-This allows us to gauge how accurate our model is.
+
+```
+test_data = []
+label_cat = 0
+for label in ["neg", "pos", "neu"]:
+labeled_dir = f"{test_dir}/{label}"
+for file in os.listdir(labeled_dir):
+    if file.endswith(".txt"):
+	with open(f"{labeled_dir}/{file}", mode='r') as f:
+	    reader = f.read()
+	    test_data.append([reader, label_cat])
+label_cat += 1
+total = 0
+correct = 0
+
+for data in test_data:
+actual_cat = data[1]
+predicted_cat = predict(model, data[0])
+if(actual_cat == predicted_cat):
+    correct += 1
+total += 1
+
+accuracy = correct/total
+rounded_acc = "{:.2f}".format(accuracy)
+return rounded_acc
+
+```
+We also included a testing feature that tests how accurate our model is.
+This is done via comparing the number of correctly predicted labels against a set of comments with known labels.
+
+## Milestone Updates
+For this milestone, we launched our application using HeroKu and updated the following features:
+
+Frontend
+a. Improved user interface of website
+b. Added a searchbar feature to search for specific stock tickers
+c. Added a sorting feature to sort for different categories
+d. Added color indicators for rising and dropping stock prices
+
+Backend
+a. Scraped for closing and opening stock prices
+b. Added more training data for sentiment analysis
+c. Added a testing feature for a more accurate model
  
 ## Tech Stack
 1. Reddit API (For backend web scraping)
