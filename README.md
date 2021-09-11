@@ -1,6 +1,6 @@
 # Neptune :rocket:
 
-Proposed Level of Achievement: **Germini**
+Level of Achievement: **Apollo**
 
 This project aims to help stock investors have a better evaluation of stocks to purchase through the popularity and sentiment of the stock.
 
@@ -59,20 +59,6 @@ sortedStockCount = sorted(filteredStockCount.items(), key=lambda x: x[1][1], rev
 csvFile = make_csv_file(getCurrDate())
 ```
 
-A stock price functionality was added to scrape for stock prices with the BeautifulSoup extension on Yahoo Finances.
-
-```
-url = "https://finance.yahoo.com/quote/{stock}/".format(stock=stock)
-
-r = requests.get(url)
-soup = BeautifulSoup(r.text, "html.parser")
-
-closing_price = soup.find('td', {"class": "Ta(end) Fw(600) Lh(14px)", "data-test": "PREV_CLOSE-value"})
-opening_price = soup.find('td', {"class": "Ta(end) Fw(600) Lh(14px)", "data-test": "OPEN-value"})
-```
-
-This information is parsed into a dictionary and exported as a CSV file for the frontend to process.
-
 ###### Feature 3: Sentiment Analysis
 Comments from the reddit posts are scraped and labelled with a score out of 1.
 This is done with machine learning where a baseline model is created with Google's Tensorflow module.
@@ -117,49 +103,6 @@ This sentiment analysis is then applied onto all the comments that mention the s
 In other words, if the scraper picked up 10 comments that mentioned the stock and predicted 6 as positive.
 The overall sentiment score of this stock would be 0.60.
 
-```
-for i in range(len(postIDs)):
-    submission = reddit.submission(id=postIDs[i])
-    submission.comments.replace_more(limit=None)
-    for comment in submission.comments.list():
-	for stock in stockTickers.keys():
-	    if re.search(r'\s+\$?' + stock + r'\$?\s+', comment.body):
-		stockDetails[stock]["comment_mentions"] += 1
-		# prediction returns a index where 0,1,2 stands for neg,pos,neu
-		prediction = predict(model, comment.body)
-		# print(f"{comment.body} :\n{prediction}")
-		stockDetails[stock]["scores"][prediction] += 1
-		if stock not in stockMention:
-		    stockMention.append(stock)
-```
-
-
-```
-test_data = []
-label_cat = 0
-for label in ["neg", "pos", "neu"]:
-labeled_dir = f"{test_dir}/{label}"
-for file in os.listdir(labeled_dir):
-    if file.endswith(".txt"):
-	with open(f"{labeled_dir}/{file}", mode='r') as f:
-	    reader = f.read()
-	    test_data.append([reader, label_cat])
-label_cat += 1
-total = 0
-correct = 0
-
-for data in test_data:
-actual_cat = data[1]
-predicted_cat = predict(model, data[0])
-if(actual_cat == predicted_cat):
-    correct += 1
-total += 1
-
-accuracy = correct/total
-rounded_acc = "{:.2f}".format(accuracy)
-return rounded_acc
-
-```
 We also included a testing feature that tests how accurate our model is.
 This is done via comparing the number of correctly predicted labels against a set of comments with known labels.
 
