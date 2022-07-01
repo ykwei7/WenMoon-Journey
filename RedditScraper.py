@@ -7,15 +7,6 @@ from sentimentTracker.sentimentTracker import predict
 from tensorflow import keras
 from PriceScraper import stock_price
 
-
-reddit = praw.Reddit(
-    client_id="d5ihZsiHFZKsiA",
-    client_secret="FT9oMbbsY8rzN_e-CLJbrFXspWudFw",
-    password="TestPassword123!",
-    user_agent="Testing_api",
-    username="neptuneorbit10",
-)
-
 class StockComment(object):
     def __init__(self, stock, numComments):
         self.stock = stock
